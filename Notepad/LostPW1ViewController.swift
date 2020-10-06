@@ -9,7 +9,7 @@
 import UIKit
 
 class LostPW1ViewController: UIViewController {
-
+    
     @IBOutlet var btnCheckNum: UIButton!
     @IBOutlet var btnCheck: UIButton!
     
@@ -17,10 +17,9 @@ class LostPW1ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         btnCheckNum.layer.cornerRadius = 10
-               btnCheck.layer.cornerRadius = 10
+        btnCheck.layer.cornerRadius = 10
         btnNext.layer.cornerRadius = 10
         
     }
@@ -29,5 +28,5 @@ class LostPW1ViewController: UIViewController {
         performSegue(withIdentifier:"pageToLostPW2", sender: nil)
     }
     
-
+    
 }

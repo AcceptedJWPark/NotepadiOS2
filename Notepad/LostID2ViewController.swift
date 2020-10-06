@@ -19,8 +19,6 @@ class LostID2ViewController: UIViewController {
 
         btnLogin.layer.cornerRadius = 10
         btnJoin.layer.cornerRadius = 10
-       
-        
     }
     
 

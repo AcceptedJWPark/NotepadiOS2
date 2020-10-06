@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class tutorialClick2Cell : UITableViewCell{
     
@@ -19,30 +20,30 @@ class tutorialClick2Cell : UITableViewCell{
 
 
 class Tutorial_Click2_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet var ivNextBtn: UIImageView!
     @IBOutlet var searchView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
         searchView.layer.cornerRadius = 10
         
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
-             ivNextBtn.isUserInteractionEnabled = true
-             ivNextBtn.addGestureRecognizer(tapGestureRecognizer1)
+        ivNextBtn.isUserInteractionEnabled = true
+        ivNextBtn.addGestureRecognizer(tapGestureRecognizer1)
         
     }
     
     @available(iOS 2.0, *)
-       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return 4
     }
-
-       
-       @available(iOS 2.0, *)
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-       {
+    
+    
+    @available(iOS 2.0, *)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tutorialCell", for: indexPath) as! tutorialClick2Cell
         
         if(indexPath.row == 0)
@@ -69,12 +70,10 @@ navigationController?.isNavigationBarHidden = true
         
         return cell
     }
-
+    
     @objc func imageTapped1(tapGestureRecognizer: UITapGestureRecognizer)
     {
-         self.performSegue(withIdentifier: "pageToSecutiry", sender: self)
+        self.performSegue(withIdentifier: "pageToSecutiry", sender: self)
     }
     
-    
-
 }

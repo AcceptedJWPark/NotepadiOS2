@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class Tutorial_PW_ViewController: UIViewController {
     
@@ -30,7 +31,7 @@ class Tutorial_PW_ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationController?.isNavigationBarHidden = true
-
+        
         
         lb1.dynamicFont(fontSize: 28, weight: .semibold)
         lb2.dynamicFont(fontSize: 28, weight: .semibold)
@@ -68,10 +69,11 @@ class Tutorial_PW_ViewController: UIViewController {
             }
         }else{
             for i in 0..<pwArray.count
-                       {
-                        pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                       }
-            self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            {
+                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+            }
+            updateSecureCode()
+            
         }
     }
     
@@ -79,46 +81,47 @@ class Tutorial_PW_ViewController: UIViewController {
     {
         pwInput = pwInput + "2"
         if(pwInput.count < 6)
-    {
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
+    
     @IBAction func pressBtn3(_ sender: Any)
     {pwInput = pwInput + "3"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     
@@ -126,24 +129,24 @@ class Tutorial_PW_ViewController: UIViewController {
     {
         pwInput = pwInput + "4"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     
@@ -151,24 +154,24 @@ class Tutorial_PW_ViewController: UIViewController {
     {
         pwInput = pwInput + "5"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     
@@ -176,48 +179,48 @@ class Tutorial_PW_ViewController: UIViewController {
     {
         pwInput = pwInput + "6"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     @IBAction func pressBtn7(_ sender: Any)
     {
         pwInput = pwInput + "7"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     
@@ -225,24 +228,24 @@ class Tutorial_PW_ViewController: UIViewController {
     {
         pwInput = pwInput + "8"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     
@@ -250,47 +253,47 @@ class Tutorial_PW_ViewController: UIViewController {
     {
         pwInput = pwInput + "9"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
+            {
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
+            }
+        }else{
+            for i in 0..<pwArray.count
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
             }
-        }
-    }else{
-        for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+            updateSecureCode()
         }
     }
     @IBAction func pressBtn0(_ sender: Any)
     {
         pwInput = pwInput + "0"
         if(pwInput.count < 6)
-    {
-        
-        for i in 0..<pwArray.count
         {
-            if(i<=pwInput.count-1)
+            
+            for i in 0..<pwArray.count
             {
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                
-            }else{
-                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                if(i<=pwInput.count-1)
+                {
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                    
+                }else{
+                    pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+                }
             }
-        }
-    }else{  for i in 0..<pwArray.count
-                             {
-                              pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                             }
-                  self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+        }else{  for i in 0..<pwArray.count
+        {
+            pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+            }
+            updateSecureCode()
         }
     }
     
@@ -312,23 +315,42 @@ class Tutorial_PW_ViewController: UIViewController {
         }else{
             return
         }
-        print(pwInput)
     }
     
     @IBAction func pressRefresh(_ sender: Any) {
         pwInput = ""
         for i in 0..<pwArray.count
-                   {
-                       if(i<=pwInput.count-1)
-                       {
-                           pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
-                           
-                       }else{
-                           pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
-                       }
-                   }
+        {
+            if(i<=pwInput.count-1)
+            {
+                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
+                
+            }else{
+                pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+            }
+        }
     }
     
+    func updateSecureCode() {
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Member/updateSecurityCode.do", method: .post, parameters: ["MemID": UserDefaults.standard.string(forKey: "userID")!, "SecurityCode": pwInput])
+                    .validate()
+                    .responseJSON {
+                        response in
+                        switch response.result {
+                        case .success(let value):
+                            let json = value as! [String:Any]
+                            
+                            if let result = json["result"] as? String {
+                                if result == "success" {
+                                    self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+                                }
+                            }
+                        
+                        case .failure(let error):
+                            print("Error in network \(error)")
+                        }
+                }
+    }
     
 }
 

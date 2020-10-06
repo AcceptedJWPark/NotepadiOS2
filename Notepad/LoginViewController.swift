@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoginViewController: UIViewController {
     
@@ -43,7 +44,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func lostPw(_ sender: Any) {
         performSegue(withIdentifier:"pageToLostPW", sender: nil)
-    
+        
     }
     
     
@@ -52,16 +53,77 @@ class LoginViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-             self.view.endEditing(true)
-       }
-  
-    @IBAction func btnLogin(_ sender: Any) {
-        if(isFirstLogin)
-        {
-
-            performSegue(withIdentifier:"pageToTutorial", sender: nil)
-        }
+        self.view.endEditing(true)
     }
     
+    @IBAction func btnLogin(_ sender: Any) {
+        goLogin()
+    }
+    
+    func goLogin() {
+        
+        let id = tfId.text!
+        let pw = tfPw.text!
+        
+        if id == nil || id.count == 0 {
+            print("아이디를 입력해주세요.")
+            return
+        }
+        
+        if pw == nil || pw.count == 0 {
+            print("비밀번호를 입력해주세요.")
+            return
+        }
+        
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Member/memberLogin.do", method: .post, parameters: ["MemID": id, "Password": pw])
+            .validate()
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = value as! [String:Any]
+                    
+                    if let result = json["result"] as? String {
+                        if result == "success" {
+                            let bg1 = json["BackColor1"] as! String
+                            let bg2 = json["BackColor2"] as! String
+                            let txtColor = json["TextColor"] as! String
+                            let iconColor = json["IconColor"] as! String
+                            
+                            let menubarFlag = json["MenubarFlag"] as! String
+                            let regDateFlag = json["RegDateFlag"] as! String
+                            let summaryFlag = json["SummaryFlag"] as! String
+                            let searchFlag = json["SearchFlag"] as! String
+                            
+                            //                            let appName = json["AppName"] as! String
+                            
+                            let securityCode = json["SecurityCode"] as! String
+                            let backgroundCode = json["BackgroundCode"] as! Int
+                            
+                            UserDefaults.standard.set(bg1, forKey: "BackColor1")
+                            UserDefaults.standard.set(bg2, forKey: "BackColor2")
+                            UserDefaults.standard.set(txtColor, forKey: "TextColor")
+                            UserDefaults.standard.set(iconColor, forKey: "IconColor")
+                            
+                            UserDefaults.standard.set(menubarFlag, forKey: "MenubarFlag")
+                            UserDefaults.standard.set(regDateFlag, forKey: "RegDateFlag")
+                            UserDefaults.standard.set(summaryFlag, forKey: "SummaryFlag")
+                            UserDefaults.standard.set(searchFlag, forKey: "SearchFlag")
+                            
+                            //                            UserDefaults.standard.set(appName, forKey: "AppName")
+                            
+                            UserDefaults.standard.set(securityCode, forKey: "SecurityCode")
+                            UserDefaults.standard.set(backgroundCode, forKey: "BackgroundCode")
+                            UserDefaults.standard.set(id, forKey: "userID")
+                            
+                            self.performSegue(withIdentifier:"segueHome", sender: nil)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print("Error in network \(error)")
+                }
+        }
+    }
     
 }

@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Alamofire
 
 class Tutorial_Click_ViewController: UIViewController {
-
+    
     @IBOutlet var lb1: UILabel!
     @IBOutlet var lb2: UILabel!
     
@@ -31,9 +32,9 @@ class Tutorial_Click_ViewController: UIViewController {
     @IBOutlet var nextBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationController?.isNavigationBarHidden = true
-
+        
         nextBtn.layer.cornerRadius = 10
         
         lb1.dynamicFont(fontSize: 26, weight: .semibold)
@@ -76,11 +77,12 @@ class Tutorial_Click_ViewController: UIViewController {
     @IBAction func nextBtn(_ sender: Any) {
         if(clickType>0)
         {
-             self.performSegue(withIdentifier: "pageToTutorialClick2", sender: self)
+            updateClickType()
         }else{
             return
         }
     }
+    
     @objc func imageTapped1(tapGestureRecognizer: UITapGestureRecognizer)
     {
         clickType = 1
@@ -104,7 +106,7 @@ class Tutorial_Click_ViewController: UIViewController {
     }
     
     @objc func imageTapped2(tapGestureRecognizer: UITapGestureRecognizer)
-       {
+    {
         clickType = 2
         
         ivClick1.image = UIImage(named: "click1_1")
@@ -124,11 +126,11 @@ class Tutorial_Click_ViewController: UIViewController {
         lbClick1.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         lbClick3.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         lbClick4.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
-       }
+    }
     
     @objc func imageTapped3(tapGestureRecognizer: UITapGestureRecognizer)
-       {
-           clickType = 3
+    {
+        clickType = 3
         
         ivClick1.image = UIImage(named: "click1_1")
         ivClick2.image = UIImage(named: "click2_1")
@@ -147,11 +149,11 @@ class Tutorial_Click_ViewController: UIViewController {
         lbClick2.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         lbClick1.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         lbClick4.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
-       }
+    }
     
     @objc func imageTapped4(tapGestureRecognizer: UITapGestureRecognizer)
-       {
-           clickType = 4
+    {
+        clickType = 4
         
         ivClick1.image = UIImage(named: "click1_1")
         ivClick2.image = UIImage(named: "click2_1")
@@ -170,9 +172,28 @@ class Tutorial_Click_ViewController: UIViewController {
         lbClick2.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         lbClick3.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         lbClick1.textColor = UIColor.init(displayP3Red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
-       }
-
-
+    }
+    
+    func updateClickType() {
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Setting/updateClickType.do", method: .post, parameters: ["MemID": UserDefaults.standard.string(forKey: "userID")!, "ClickType": clickType])
+            .validate()
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = value as! [String:Any]
+                    
+                    if let result = json["result"] as? String {
+                        if result == "success" {
+                            self.performSegue(withIdentifier: "pageToTutorialClick2", sender: self)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print("Error in network \(error)")
+                }
+        }
+    }
 }
 
 

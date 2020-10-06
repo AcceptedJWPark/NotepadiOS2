@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MemoListTableviewCell: UITableViewCell{
     
@@ -31,6 +32,8 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     @IBOutlet var dimView: UIView!
     @IBOutlet var totalConainer: UIView!
+    var userID: String!
+    var datas: [MemoData]!
     
     lazy var menuTableView: UITableView = {
         let tableView = UITableView()
@@ -85,7 +88,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         
         height = statusBarRect.height
-        
+        userID = UserDefaults.standard.string(forKey: "userID")!
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         
@@ -163,13 +166,13 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         trashView.isHidden = true
     }
     
-
+    
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-         if(tableView == memoTable)
-         {
-            return 5
-         }else{
+        if(tableView == memoTable)
+        {
+            return self.datas.count
+        }else{
             return menuTitle.count
         }
         
@@ -180,10 +183,10 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         {
             let int = 123
             let cgfloat = CGFloat(int)
-           return cgfloat
+            return cgfloat
         }else{
             let int = 60
-             let cgfloat = CGFloat(int)
+            let cgfloat = CGFloat(int)
             return cgfloat
             
         }
@@ -195,10 +198,24 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if(tableView == memoTable)
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "memolistCell", for: indexPath) as! MemoListTableviewCell
+            let data = self.datas[indexPath.row]
             cell.memoContainer.layer.shadowColor = UIColor.gray.cgColor
             cell.memoContainer.layer.shadowOpacity = 0.5
             cell.memoContainer.layer.shadowRadius = 3
             cell.memoContainer.layer.shadowOffset = CGSize(width: 1, height: 1)
+            
+            if data.secureType == "3" {
+                cell.memoTitle.text = data.fTitle
+                cell.memoSummary.text = data.fContent
+            } else {
+                cell.memoTitle.text = data.rTitle
+                cell.memoSummary.text = data.rContent
+            }
+            
+            cell.memoDate.text = data.date
+            
+            
+            
             return cell
         }else{
             let cell = UITableViewCell()
@@ -237,25 +254,77 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             return cell
             
         }
+        
+        
+    }
     
+    func getBasicMemoList() {
+        
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Memo/getBasicMemoList.do", method: .post, parameters: ["MemID": userID, "SearchText": ""])
+            .validate()
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let jsonArray = value as! [[String:Any]]
+                    self.datas = []
+                    
+                    for json in jsonArray {
+                        let memoCode = json["MemoCode"] as! Int
+                        let rTitle = json["RTitle"] as! String
+                        let rContent = json["RContent"] as! String
+                        let fTitle = json["FTitle"] as! String
+                        let fContent = json["FContent"] as! String
+                        let secureType = json["SecureType"] as! String
+                        let clickType = json["ClickType"] as! String
+                        
+                        let pdate1 = json["RegDate"] as! Double
+                        let routineDateFormatter = DateFormatter()
+                        routineDateFormatter.dateFormat = "yyyy-MM-dd hh:mm"
+                        let pdate2 = Date(timeIntervalSince1970: pdate1/1000.0)
+                        let date = routineDateFormatter.string(from: pdate2)
+                        
+                        let data = MemoData(memoCode: memoCode, rTitle: rTitle, rContent: rContent, fTitle: fTitle, fContent: fContent, date: date, secureType: secureType, clickType: clickType)
+                        
+                        self.datas.append(data)
+                    }
+                    
+                    self.memoTable.reloadData()
+                case .failure(let error):
+                    print("Error in network \(error)")
+                }
+        }
+    }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+    
+    @objc func keyboardHide(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        self.view.endEditing(true)
+        
+    }
 }
+
+class MemoData {
+    var memoCode: Int
+    var rTitle: String
+    var rContent: String
+    var fTitle: String
+    var fContent: String
+    var date: String
+    var secureType: String
+    var clickType: String
     
-    
-
-
-
-
-override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-    self.view.endEditing(true)
-}
-
-@objc func keyboardHide(tapGestureRecognizer: UITapGestureRecognizer)
-{
-    self.view.endEditing(true)
-    
-}
-
-
-
+    init(memoCode: Int, rTitle: String, rContent: String, fTitle: String, fContent: String, date: String, secureType: String, clickType: String) {
+        self.memoCode = memoCode
+        self.rTitle = rTitle
+        self.rContent = rContent
+        self.fTitle = fTitle
+        self.fContent = fContent
+        self.date = date
+        self.secureType = secureType
+        self.clickType = clickType
+    }
 }
