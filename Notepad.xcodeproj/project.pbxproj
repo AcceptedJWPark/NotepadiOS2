@@ -18,6 +18,7 @@
 		856C21542511EEAF0046002B /* LostPW1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C21532511EEAF0046002B /* LostPW1ViewController.swift */; };
 		856C21562511EEB80046002B /* LostPW2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C21552511EEB80046002B /* LostPW2ViewController.swift */; };
 		856C215825120C6A0046002B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C215725120C6A0046002B /* BackgroundViewController.swift */; };
+		856C920E252845AB006D3A1B /* SecurityTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C920D252845AB006D3A1B /* SecurityTypeViewController.swift */; };
 		856D32D22517265000BDFCAD /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856D32D12517265000BDFCAD /* MemoListViewController.swift */; };
 		858BACF424FA34370093D8EE /* Tutorial_Security_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858BACF324FA34370093D8EE /* Tutorial_Security_ViewController.swift */; };
 		85D1144924EF65C900AC4554 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D1144824EF65C900AC4554 /* AppDelegate.swift */; };
@@ -41,6 +42,7 @@
 		856C21532511EEAF0046002B /* LostPW1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostPW1ViewController.swift; sourceTree = "<group>"; };
 		856C21552511EEB80046002B /* LostPW2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostPW2ViewController.swift; sourceTree = "<group>"; };
 		856C215725120C6A0046002B /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
+		856C920D252845AB006D3A1B /* SecurityTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityTypeViewController.swift; sourceTree = "<group>"; };
 		856D32D12517265000BDFCAD /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		858BACF324FA34370093D8EE /* Tutorial_Security_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial_Security_ViewController.swift; sourceTree = "<group>"; };
 		85D1144524EF65C900AC4554 /* Notepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notepad.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 				856C21552511EEB80046002B /* LostPW2ViewController.swift */,
 				856C215725120C6A0046002B /* BackgroundViewController.swift */,
 				856D32D12517265000BDFCAD /* MemoListViewController.swift */,
+				856C920D252845AB006D3A1B /* SecurityTypeViewController.swift */,
 			);
 			path = Notepad;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				856C21522511EEA30046002B /* LostID2ViewController.swift in Sources */,
 				856C214C2511DF070046002B /* LoginViewController.swift in Sources */,
 				85D1144D24EF65C900AC4554 /* Tutorial_PW_ViewController.swift in Sources */,
+				856C920E252845AB006D3A1B /* SecurityTypeViewController.swift in Sources */,
 				856C214E2511E2F40046002B /* JoinViewController.swift in Sources */,
 				851D78B824EFB50900B07E59 /* Tutorial_Click2_ViewController.swift in Sources */,
 				851D78B624EFA12200B07E59 /* Tutorial_Click_ViewController.swift in Sources */,

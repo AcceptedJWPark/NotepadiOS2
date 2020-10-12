@@ -10,7 +10,7 @@ import UIKit
 
 class BackgroundViewController: UIViewController {
     var isMenubar:Bool!
-    var isSearch:Bool!
+
     
     @IBOutlet var searchContainerHeight: NSLayoutConstraint!
     
@@ -43,10 +43,11 @@ class BackgroundViewController: UIViewController {
     @IBOutlet var regDate: UILabel!
     @IBOutlet var tfAppTitle: UITextField!
     
+    @IBOutlet var appName: UILabel!
     
     @IBOutlet var ivMenu: UIImageView!
     @IBOutlet var lbColorMode: UILabel!
-    @IBOutlet var appTitle: UILabel!
+    
     @IBOutlet var ivSearch: UIImageView!
     
     //color4
@@ -107,15 +108,12 @@ class BackgroundViewController: UIViewController {
         viewColor4.layer.borderWidth = 1
         
         switchIsMenu.layer.borderWidth = 2
-        switchIsSearch.layer.borderWidth = 2
         switchIsMenu.layer.cornerRadius = 10
-        switchIsSearch.layer.cornerRadius = 10
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         isMenubar = true
-        isSearch = true
         
         if(isMenubar)
         {
@@ -135,25 +133,7 @@ class BackgroundViewController: UIViewController {
                               ivMenu.tintColor = UIColor(hexFromString: choosedColor2)
         }
         
-        if(isSearch)
-        {
-            
-            searchContainer2.isHidden = false
-            switchIsSearch.text = "ON"
-            searchContainerHeight.constant = 80
-            
-            switchIsSearch.textColor = UIColor(hexFromString: choosedColor4)
-            switchIsSearch.layer.borderColor = UIColor(hexFromString: choosedColor4).cgColor
-            
-            
-        }else{
-            searchContainer2.isHidden = true
-            switchIsSearch.text = "OFF"
-            searchContainerHeight.constant = 40
-            switchIsSearch.textColor = UIColor(hexFromString: "#949494")
-            switchIsSearch.layer.borderColor = UIColor(hexFromString: "#949494").cgColor
-        }
-        
+      
         
         
         tfAppTitle.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -178,8 +158,7 @@ class BackgroundViewController: UIViewController {
         
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(isMenubar(tapGestureRecognizer:)))
         
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(isSearch(tapGestureRecognizer:)))
-        
+       
         let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(keyboardHide(tapGestureRecognizer:)))
         
         let tapGestureRecognizer4 = UITapGestureRecognizer(target: self, action: #selector(colormodeLeft(tapGestureRecognizer:)))
@@ -188,9 +167,7 @@ class BackgroundViewController: UIViewController {
         
         switchIsMenu.isUserInteractionEnabled = true
         switchIsMenu.addGestureRecognizer(tapGestureRecognizer1)
-        switchIsSearch.isUserInteractionEnabled = true
-        switchIsSearch.addGestureRecognizer(tapGestureRecognizer2)
-        
+      
         trashView.isHidden = true
         trashView.isUserInteractionEnabled = true
         trashView.addGestureRecognizer(tapGestureRecognizer3)
@@ -212,13 +189,16 @@ class BackgroundViewController: UIViewController {
     
     @objc func textFieldDidChange(tapGestureRecognizer: UITapGestureRecognizer)
     {
-        appTitle.text = tfAppTitle.text
+        appName.text = tfAppTitle.text
     }
     
     @objc func keyboardHide(tapGestureRecognizer: UITapGestureRecognizer)
     {
         self.view.endEditing(true)
         
+    }
+    @IBAction func saveBgr(_ sender: Any) {
+        performSegue(withIdentifier: "pageToMain", sender: nil)
     }
     @objc func colormodeLeft(tapGestureRecognizer: UITapGestureRecognizer)
     {
@@ -297,30 +277,7 @@ class BackgroundViewController: UIViewController {
     }
     
     
-    @objc func isSearch(tapGestureRecognizer: UITapGestureRecognizer)
-    {
-        
-        if(isSearch)
-        {
-            isSearch = false
-            searchContainer2.isHidden = true
-            switchIsSearch.text = "OFF"
-            searchContainerHeight.constant = 40
-            switchIsSearch.textColor = UIColor(hexFromString: "#949494")
-            switchIsSearch.layer.borderColor = UIColor(hexFromString: "#949494").cgColor
-            
-        }else{
-            isSearch = true
-            searchContainer2.isHidden = false
-            switchIsSearch.text = "ON"
-            searchContainerHeight.constant = 80
-            
-            switchIsSearch.textColor = UIColor(hexFromString: choosedColor4)
-            switchIsSearch.layer.borderColor = UIColor(hexFromString: choosedColor4).cgColor
-        }
-        
-        
-    }
+   
     
     @objc func keyboardWillAppear(notification: NSNotification) {
         
@@ -346,7 +303,7 @@ class BackgroundViewController: UIViewController {
         tfSearch.backgroundColor = UIColor(hexFromString: color1)
         container.backgroundColor = UIColor(hexFromString: color1)
         tfAppTitle.backgroundColor = UIColor(hexFromString: color1)
-        
+        trashView.backgroundColor = UIColor(hexFromString: color1)
         
         
         //color2
@@ -366,7 +323,7 @@ class BackgroundViewController: UIViewController {
         memoSummay.textColor = UIColor(hexFromString: color3)
         regDate.textColor = UIColor(hexFromString: color3)
         lbApptitle.textColor = UIColor(hexFromString: color3)
-        appTitle.textColor = UIColor(hexFromString: color3)
+        appName.textColor = UIColor(hexFromString: color3)
         tfAppTitle.textColor = UIColor(hexFromString: color3)
         
         tfAppTitle.attributedPlaceholder = NSAttributedString(string: "App 제목을 입력하세요.",

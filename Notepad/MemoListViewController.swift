@@ -30,6 +30,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     var slideMenuWidth:CGFloat = 100
     
+    @IBOutlet var containerView: UIView!
     @IBOutlet var dimView: UIView!
     @IBOutlet var totalConainer: UIView!
     var userID: String!
@@ -190,6 +191,21 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let cgfloat = CGFloat(int)
             return cgfloat
             
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(tableView == memoTable)
+        {
+            
+        }else
+        {
+            if(indexPath.row == 3)
+            {
+                performSegue(withIdentifier: "pageToBgrSetting", sender: nil)
+
+            
+            }
         }
     }
     
