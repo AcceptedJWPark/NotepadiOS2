@@ -185,6 +185,7 @@ class Tutorial_Click_ViewController: UIViewController {
                     
                     if let result = json["result"] as? String {
                         if result == "success" {
+                            UserDefaults.standard.set(self.clickType, forKey: "clickType")
                             self.performSegue(withIdentifier: "pageToTutorialClick2", sender: self)
                         }
                     }

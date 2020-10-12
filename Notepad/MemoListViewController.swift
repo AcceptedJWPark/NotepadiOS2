@@ -33,7 +33,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet var dimView: UIView!
     @IBOutlet var totalConainer: UIView!
     var userID: String!
-    var datas: [MemoData]!
+    var datas: [MemoData] = []
     
     lazy var menuTableView: UITableView = {
         let tableView = UITableView()
@@ -113,6 +113,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         trashView.addGestureRecognizer(tapGestureRecognizer3)
         
         setupMenuView()
+        getBasicMemoList()
         
     }
     
@@ -213,7 +214,32 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
             
             cell.memoDate.text = data.date
+            let singleTapGesture = SecureTapGestureRecognizer(target: self, action: #selector(singleTap(_:)))
+            let doubleTapGesture = SecureTapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
+            doubleTapGesture.numberOfTapsRequired = 2
+            let longPressGesture = SecureLongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+            if data.clickType == "3" {
+                longPressGesture.minimumPressDuration = 1
+            } else if data.clickType == "4" {
+                longPressGesture.minimumPressDuration = 3
+            } else {
+                longPressGesture.minimumPressDuration = 0.5
+            }
             
+            
+            singleTapGesture.require(toFail: doubleTapGesture)
+            
+            singleTapGesture.clickType = Int(data.clickType)
+            singleTapGesture.secureType = Int(data.secureType)
+            doubleTapGesture.clickType = Int(data.clickType)
+            doubleTapGesture.secureType = Int(data.secureType)
+            longPressGesture.clickType = Int(data.clickType)
+            longPressGesture.secureType = Int(data.secureType)
+            
+            cell.isUserInteractionEnabled = true
+            cell.addGestureRecognizer(singleTapGesture)
+            cell.addGestureRecognizer(doubleTapGesture)
+            cell.addGestureRecognizer(longPressGesture)
             
             
             return cell
@@ -260,7 +286,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func getBasicMemoList() {
         
-        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Memo/getBasicMemoList.do", method: .post, parameters: ["MemID": userID, "SearchText": ""])
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Memo/getBasicMemoList.do", method: .post, parameters: ["MemID": userID!, "SearchText": ""])
             .validate()
             .responseJSON {
                 response in
@@ -305,7 +331,66 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.endEditing(true)
         
     }
+    
+    @objc func singleTap(_ sender: SecureTapGestureRecognizer) {
+        print("single tap")
+        // 보안 설정인 경우
+        if sender.secureType == 3 {
+            // 클릭 타입이 단일 선택인 경우
+            if sender.clickType == 1 {
+                // 실제글 표시
+            } else {
+                // 페이크글 표시
+            }
+        } else {
+            // 실제글 표시 (일반글)
+        }
+    }
+    
+    @objc func doubleTap(_ sender: SecureTapGestureRecognizer) {
+        print("double tap")
+        // 보안 설정인 경우
+        if sender.secureType == 3 {
+            // 클릭 타입이 더블클릭인 경우
+            if sender.clickType == 2 {
+                // 실제글 표시
+            } else {
+                // 페이크글 표시
+            }
+        } else {
+            // 실제글 표시 (일반글)
+        }
+    }
+    
+    @objc func longPress(_ sender: SecureLongPressGestureRecognizer) {
+        if sender.state == .ended {
+            print("long press")
+            // 보안 설정인 경우
+            if sender.secureType == 3 {
+                // 클릭 타입이 롱클릭인 경우
+                if sender.clickType == 3 || sender.clickType == 4 {
+                    // 실제글 표시
+                } else {
+                    // 페이크글 표시
+                }
+            } else {
+                // 실제글 표시 (일반글)
+            }
+        }
+    }
+    
 }
+
+class SecureTapGestureRecognizer: UITapGestureRecognizer {
+    var secureType: Int!
+    var clickType: Int!
+}
+
+class SecureLongPressGestureRecognizer: UILongPressGestureRecognizer {
+    var secureType: Int!
+    var clickType: Int!
+}
+
 
 class MemoData {
     var memoCode: Int

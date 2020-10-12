@@ -23,14 +23,36 @@ class Tutorial_Click2_ViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBOutlet var ivNextBtn: UIImageView!
     @IBOutlet var searchView: UIView!
+    var clickType: Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         searchView.layer.cornerRadius = 10
+        clickType = UserDefaults.standard.integer(forKey: "clickType")
         
-        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
-        ivNextBtn.isUserInteractionEnabled = true
-        ivNextBtn.addGestureRecognizer(tapGestureRecognizer1)
+        if clickType == 1 {
+            let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
+            ivNextBtn.isUserInteractionEnabled = true
+            ivNextBtn.addGestureRecognizer(tapGestureRecognizer1)
+        } else if clickType == 2 {
+            let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
+            doubleTapGestureRecognizer.numberOfTapsRequired = 2
+            ivNextBtn.isUserInteractionEnabled = true
+            ivNextBtn.addGestureRecognizer(doubleTapGestureRecognizer)
+        } else if clickType == 3 {
+            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
+            longPressGestureRecognizer.minimumPressDuration = 1
+            ivNextBtn.isUserInteractionEnabled = true
+            ivNextBtn.addGestureRecognizer(longPressGestureRecognizer)
+        } else if clickType == 4 {
+            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
+            longPressGestureRecognizer.minimumPressDuration = 3
+            ivNextBtn.isUserInteractionEnabled = true
+            ivNextBtn.addGestureRecognizer(longPressGestureRecognizer)
+        }
+        
+
         
     }
     
