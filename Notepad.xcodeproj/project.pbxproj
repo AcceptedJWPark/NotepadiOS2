@@ -12,9 +12,9 @@
 		851D78B624EFA12200B07E59 /* Tutorial_Click_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D78B524EFA12200B07E59 /* Tutorial_Click_ViewController.swift */; };
 		851D78B824EFB50900B07E59 /* Tutorial_Click2_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851D78B724EFB50900B07E59 /* Tutorial_Click2_ViewController.swift */; };
 		8556BDD025344434002F4A70 /* PaperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556BDCF25344434002F4A70 /* PaperViewController.swift */; };
-		8556BDD225344B87002F4A70 /* ManualMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556BDD125344B87002F4A70 /* ManualMainViewController.swift */; };
-		8556BDD425344B91002F4A70 /* ManualContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556BDD325344B91002F4A70 /* ManualContentsViewController.swift */; };
 		8556BDD625344BE1002F4A70 /* ManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556BDD525344BE1002F4A70 /* ManualViewController.swift */; };
+		8556BDD825344FB2002F4A70 /* ManualContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556BDD725344FB2002F4A70 /* ManualContentsViewController.swift */; };
+		8556BDDA2534500E002F4A70 /* ManualMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556BDD92534500E002F4A70 /* ManualMainViewController.swift */; };
 		856C214C2511DF070046002B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C214B2511DF070046002B /* LoginViewController.swift */; };
 		856C214E2511E2F40046002B /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C214D2511E2F40046002B /* JoinViewController.swift */; };
 		856C21502511EE980046002B /* LostID1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856C214F2511EE980046002B /* LostID1ViewController.swift */; };
@@ -40,9 +40,9 @@
 		851D78B524EFA12200B07E59 /* Tutorial_Click_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial_Click_ViewController.swift; sourceTree = "<group>"; };
 		851D78B724EFB50900B07E59 /* Tutorial_Click2_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial_Click2_ViewController.swift; sourceTree = "<group>"; };
 		8556BDCF25344434002F4A70 /* PaperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperViewController.swift; sourceTree = "<group>"; };
-		8556BDD125344B87002F4A70 /* ManualMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualMainViewController.swift; sourceTree = "<group>"; };
-		8556BDD325344B91002F4A70 /* ManualContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualContentsViewController.swift; sourceTree = "<group>"; };
 		8556BDD525344BE1002F4A70 /* ManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualViewController.swift; sourceTree = "<group>"; };
+		8556BDD725344FB2002F4A70 /* ManualContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualContentsViewController.swift; sourceTree = "<group>"; };
+		8556BDD92534500E002F4A70 /* ManualMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualMainViewController.swift; sourceTree = "<group>"; };
 		856C214B2511DF070046002B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		856C214D2511E2F40046002B /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		856C214F2511EE980046002B /* LostID1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostID1ViewController.swift; sourceTree = "<group>"; };
@@ -135,9 +135,9 @@
 				856D32D12517265000BDFCAD /* MemoListViewController.swift */,
 				856C920D252845AB006D3A1B /* SecurityTypeViewController.swift */,
 				8556BDCF25344434002F4A70 /* PaperViewController.swift */,
-				8556BDD125344B87002F4A70 /* ManualMainViewController.swift */,
-				8556BDD325344B91002F4A70 /* ManualContentsViewController.swift */,
 				8556BDD525344BE1002F4A70 /* ManualViewController.swift */,
+				8556BDD725344FB2002F4A70 /* ManualContentsViewController.swift */,
+				8556BDD92534500E002F4A70 /* ManualMainViewController.swift */,
 			);
 			path = Notepad;
 			sourceTree = "<group>";
@@ -278,23 +278,23 @@
 			files = (
 				856C21542511EEAF0046002B /* LostPW1ViewController.swift in Sources */,
 				856C21522511EEA30046002B /* LostID2ViewController.swift in Sources */,
-				8556BDD425344B91002F4A70 /* ManualContentsViewController.swift in Sources */,
 				856C214C2511DF070046002B /* LoginViewController.swift in Sources */,
 				8556BDD625344BE1002F4A70 /* ManualViewController.swift in Sources */,
 				85D1144D24EF65C900AC4554 /* Tutorial_PW_ViewController.swift in Sources */,
 				856C920E252845AB006D3A1B /* SecurityTypeViewController.swift in Sources */,
 				856C214E2511E2F40046002B /* JoinViewController.swift in Sources */,
 				851D78B824EFB50900B07E59 /* Tutorial_Click2_ViewController.swift in Sources */,
-				8556BDD225344B87002F4A70 /* ManualMainViewController.swift in Sources */,
 				851D78B624EFA12200B07E59 /* Tutorial_Click_ViewController.swift in Sources */,
 				85D1144924EF65C900AC4554 /* AppDelegate.swift in Sources */,
 				856C21562511EEB80046002B /* LostPW2ViewController.swift in Sources */,
 				858BACF424FA34370093D8EE /* Tutorial_Security_ViewController.swift in Sources */,
 				8556BDD025344434002F4A70 /* PaperViewController.swift in Sources */,
 				856C215825120C6A0046002B /* BackgroundViewController.swift in Sources */,
+				8556BDD825344FB2002F4A70 /* ManualContentsViewController.swift in Sources */,
 				856C21502511EE980046002B /* LostID1ViewController.swift in Sources */,
 				856D32D22517265000BDFCAD /* MemoListViewController.swift in Sources */,
 				85D1144B24EF65C900AC4554 /* SceneDelegate.swift in Sources */,
+				8556BDDA2534500E002F4A70 /* ManualMainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
