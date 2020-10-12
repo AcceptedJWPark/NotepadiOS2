@@ -75,7 +75,7 @@ class LostID1ViewController: UIViewController {
                 case .success(let value):
                     let json = value as! [String:Any]
                     
-                    self.certNum = json["certNum"] as! String
+                    self.certNum = String(json["certNum"] as! Int)
                     self.isCheckPhone = false
                 case .failure(let error):
                     print("Error in network \(error)")
