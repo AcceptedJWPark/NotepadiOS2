@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -82,7 +82,6 @@
 				3548F60A148EF7FE70488FD2 /* Pods-Notepad.debug.xcconfig */,
 				67313E459728AAEFC6FCE1CC /* Pods-Notepad.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
