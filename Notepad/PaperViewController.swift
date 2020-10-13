@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class PaperViewController: UIViewController, UITextViewDelegate {
     
@@ -70,31 +71,46 @@ class PaperViewController: UIViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-        paperContents.delegate = self
-        placeholderLabel = UILabel()
-        placeholderLabel.text = "내용을 입력해주세요"
-        placeholderLabel.font = UIFont.systemFont(ofSize: paperContents.font!.pointSize)
-        placeholderLabel.sizeToFit()
-        paperContents.addSubview(placeholderLabel)
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: (paperContents.font?.pointSize)! / 2)
-        placeholderLabel.textColor = UIColor(hexFromString: "#544f4f")
-        paperContents.isHidden = !paperContents.text.isEmpty
-        
         // 새로운 글인지
         if isNew {
             // 실제글인지
-            if isReal {
-                
+            if secureType == 3 {
+                headerTitle.text = "비밀글"
             } else {
-                
+                headerTitle.text = "일반글"
             }
+            paperTitle.text = ""
+            paperContents.text = ""
         } else {
             // 실제글인지
             if isReal {
-                
+                if secureType == 3 {
+                    headerTitle.text = "비밀글"
+                    paperTitle.text = rTitle
+                    paperContents.text = rContent
+                    
+                } else {
+                    headerTitle.text = "일반글"
+                    paperTitle.text = rTitle
+                    paperContents.text = rContent
+                }
             } else {
-                
+                headerTitle.text = "일반글"
+                paperTitle.text = fTitle
+                paperContents.text = fContent
             }
+        }
+        
+        if paperContents.text.isEmpty {
+            paperContents.delegate = self
+            placeholderLabel = UILabel()
+            placeholderLabel.text = "내용을 입력해주세요"
+            placeholderLabel.font = UIFont.systemFont(ofSize: paperContents.font!.pointSize)
+            placeholderLabel.sizeToFit()
+            paperContents.addSubview(placeholderLabel)
+            placeholderLabel.frame.origin = CGPoint(x: 5, y: (paperContents.font?.pointSize)! / 2)
+            placeholderLabel.textColor = UIColor(hexFromString: "#544f4f")
+            paperContents.isHidden = !paperContents.text.isEmpty
         }
         
     }
@@ -129,6 +145,92 @@ class PaperViewController: UIViewController, UITextViewDelegate {
         tvHeight.constant = CGFloat(10)
     }
     
+    func insertMemo() {
+        let title = paperTitle.text!
+        let content = paperContents.text!
+        if title.count == 0 {
+            print("제목을 입력해주세요.")
+        }
+        
+        if content.count == 0 {
+            print("내용을 입력해주세요.")
+        }
+        
+        var params: [String: Any] = [:]
+        params["MemID"] = UserDefaults.standard.string(forKey: "userID")!
+        params["SecureType"] = secureType
+        params["ClickType"] = clickType
+        params["RTitle"] = title
+        params["RContent"] = content
+        params["FTitle"] = fTitle
+        params["FContent"] = fContent
+        
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Memo/insertMemo.do", method: .post, parameters: params)
+            .validate()
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = value as! [String:Any]
+                    
+                    if let result = json["result"] as? String {
+                        if result == "success" {
+                            self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+                        }
+                    }
+                
+                case .failure(let error):
+                    print("Error in network \(error)")
+                }
+        }
+    }
     
+    func updateMemo() {
+        let title = paperTitle.text!
+        let content = paperContents.text!
+        if title.count == 0 {
+            print("제목을 입력해주세요.")
+        }
+        
+        if content.count == 0 {
+            print("내용을 입력해주세요.")
+        }
+        
+        var params: [String: Any] = [:]
+        params["MemID"] = UserDefaults.standard.string(forKey: "userID")!
+        params["SecureType"] = secureType
+        params["ClickType"] = clickType
+        
+        if isReal {
+            params["RTitle"] = title
+            params["RContent"] = content
+            params["FTitle"] = fTitle
+            params["FContent"] = fContent
+        } else {
+            params["RTitle"] = rTitle
+            params["RContent"] = rContent
+            params["FTitle"] = title
+            params["FContent"] = content
+        }
+        
+        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Memo/updateMemo.do", method: .post, parameters: params)
+            .validate()
+            .responseJSON {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = value as! [String:Any]
+                    
+                    if let result = json["result"] as? String {
+                        if result == "success" {
+                            self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+                        }
+                    }
+                
+                case .failure(let error):
+                    print("Error in network \(error)")
+                }
+        }
+    }
     
 }

@@ -27,7 +27,8 @@ class Tutorial_PW_ViewController: UIViewController {
     
     var pwInput = ""
     var memoData: MemoData!
-    var isPaper: Bool!
+    var isTutorial: Bool! = true
+    var isReal: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,15 +51,37 @@ class Tutorial_PW_ViewController: UIViewController {
         }
         
         // 메모 리스트에서 들어온 경우
-        if isPaper {
-            
+        if !isTutorial {
+            lb_pw.text = "해당 메모는 보안되어 있습니다"
+            lb1.text = "잠금번호 6자리를"
+            lb2.text = "입력해주세요."
+            lb3.text = ""
         }
         
     }
+    
     override open var prefersStatusBarHidden: Bool {
         return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "seguePaper":
+            let paperVC = segue.destination as! PaperViewController
+            paperVC.memoCode = self.memoData.memoCode
+            paperVC.isNew = false
+            paperVC.isReal = self.isReal
+            paperVC.rTitle = self.memoData.rTitle
+            paperVC.rContent = self.memoData.rContent
+            paperVC.fTitle = self.memoData.fTitle
+            paperVC.fContent = self.memoData.fContent
+            paperVC.clickType = Int(self.memoData.clickType)
+            paperVC.secureType = Int(self.memoData.secureType)
+            return
+        default:
+            return
+        }
+    }
     
     @IBAction func pressBtn1(_ sender: Any) {
         pwInput = pwInput + "1"
@@ -79,8 +102,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
-            
+            executeLogic()
         }
     }
     
@@ -104,7 +126,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -128,7 +150,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -153,7 +175,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -178,7 +200,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -203,7 +225,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     @IBAction func pressBtn7(_ sender: Any)
@@ -227,7 +249,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -252,7 +274,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -277,7 +299,7 @@ class Tutorial_PW_ViewController: UIViewController {
             {
                 pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     @IBAction func pressBtn0(_ sender: Any)
@@ -300,7 +322,7 @@ class Tutorial_PW_ViewController: UIViewController {
         {
             pwArray[i].backgroundColor = UIColor.init(displayP3Red: 243/255, green: 115/255, blue: 0, alpha: 1.0)
             }
-            updateSecureCode()
+            executeLogic()
         }
     }
     
@@ -338,25 +360,38 @@ class Tutorial_PW_ViewController: UIViewController {
         }
     }
     
-    func updateSecureCode() {
-        AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Member/updateSecurityCode.do", method: .post, parameters: ["MemID": UserDefaults.standard.string(forKey: "userID")!, "SecurityCode": pwInput])
-                    .validate()
-                    .responseJSON {
-                        response in
-                        switch response.result {
-                        case .success(let value):
-                            let json = value as! [String:Any]
-                            
-                            if let result = json["result"] as? String {
-                                if result == "success" {
-                                    self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+    func executeLogic() {
+        if !isTutorial {
+            let securityCode = UserDefaults.standard.string(forKey: "SecurityCode")!
+            
+            // 패스워드 일치한 경우
+            if pwInput == securityCode {
+                self.isReal = true
+                self.performSegue(withIdentifier: "seguePaper", sender: nil)
+            } else {
+                self.isReal = false
+                self.performSegue(withIdentifier: "seguePaper", sender: nil)
+            }
+        } else {
+            AF.request("\(UserDefaults.standard.string(forKey: "url")!)/Member/updateSecurityCode.do", method: .post, parameters: ["MemID": UserDefaults.standard.string(forKey: "userID")!, "SecurityCode": pwInput])
+                        .validate()
+                        .responseJSON {
+                            response in
+                            switch response.result {
+                            case .success(let value):
+                                let json = value as! [String:Any]
+                                
+                                if let result = json["result"] as? String {
+                                    if result == "success" {
+                                        self.performSegue(withIdentifier: "pageToTutorialClick", sender: self)
+                                    }
                                 }
+                            
+                            case .failure(let error):
+                                print("Error in network \(error)")
                             }
-                        
-                        case .failure(let error):
-                            print("Error in network \(error)")
-                        }
-                }
+                    }
+        }
     }
     
 }

@@ -27,6 +27,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     @IBOutlet var trashView: UIView!
     @IBOutlet var memoTable: UITableView!
+    @IBOutlet var ivAddMemo: UIImageView!
     
     var slideMenuWidth:CGFloat = 100
     
@@ -100,8 +101,6 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         ivMenu.isUserInteractionEnabled = true
         ivMenu.addGestureRecognizer(tapgesture2)
         
-        
-        
         headerContainer.layer.shadowColor = UIColor.gray.cgColor
         headerContainer.layer.shadowOpacity = 0.5
         headerContainer.layer.shadowRadius = 3
@@ -117,7 +116,6 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         setupMenuView()
         getBasicMemoList()
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -134,6 +132,10 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             paperVC.clickType = Int(self.selectedData.clickType)
             paperVC.secureType = Int(self.selectedData.secureType)
             return
+        case "seguePW":
+            let pwVC = segue.destination as! Tutorial_PW_ViewController
+            pwVC.memoData = self.selectedData
+            pwVC.isTutorial = false
         default:
             return
         }
@@ -255,9 +257,9 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let doubleTapGesture = SecureTapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
             doubleTapGesture.numberOfTapsRequired = 2
             let longPressGesture = SecureLongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
-            if data.clickType == "3" {
+            if data.clickType == "2" {
                 longPressGesture.minimumPressDuration = 1
-            } else if data.clickType == "4" {
+            } else if data.clickType == "3" {
                 longPressGesture.minimumPressDuration = 3
             } else {
                 longPressGesture.minimumPressDuration = 0.5
@@ -370,14 +372,8 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         print("single tap")
         // 보안 설정인 경우
         if sender.data.secureType == "3" {
-            // 클릭 타입이 단일 선택인 경우
-            if sender.data.clickType == "1" {
-                // 실제글 표시
-                showPaper(data: sender.data, isReal: true)
-            } else {
-                // 페이크글 표시
-                showPaper(data: sender.data, isReal: false)
-            }
+            // 페이크글 표시
+            showPaper(data: sender.data, isReal: false)
         } else {
             // 실제글 표시 (일반글)
             showPaper(data: sender.data, isReal: true)
@@ -389,7 +385,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         // 보안 설정인 경우
         if sender.data.secureType == "3" {
             // 클릭 타입이 더블클릭인 경우
-            if sender.data.clickType == "2" {
+            if sender.data.clickType == "1" {
                 // 실제글 표시
                 showPaper(data: sender.data, isReal: true)
             } else {
@@ -408,7 +404,7 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             // 보안 설정인 경우
             if sender.data.secureType == "3" {
                 // 클릭 타입이 롱클릭인 경우
-                if sender.data.clickType == "3" || sender.data.clickType == "4" {
+                if sender.data.clickType == "2" || sender.data.clickType == "3" {
                     // 실제글 표시
                     showPaper(data: sender.data, isReal: true)
                 } else {
@@ -426,7 +422,25 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.selectedData = data
         self.selectedIsReal = isReal
         
-        self.performSegue(withIdentifier: "seguePaper", sender: nil)
+        if isReal && data.secureType == "3" {
+            self.performSegue(withIdentifier: "seguePW", sender: nil)
+        } else {
+            self.performSegue(withIdentifier: "seguePaper", sender: nil)
+        }
+    }
+    
+    func addMemo() {
+        let clickType = UserDefaults.standard.integer(forKey: "clickType")
+        
+        if clickType == 1 {
+            
+        } else if clickType == 2 {
+            
+        } else if clickType == 3 {
+            
+        } else if clickType == 4 {
+            
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dNE-UB-QXQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6bA-d5-Ve3">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -535,12 +535,13 @@
                         <outlet property="containerView" destination="kpv-fY-S0V" id="aOi-ko-v1r"/>
                         <outlet property="dimView" destination="H2t-MC-rTm" id="IOp-xa-hHO"/>
                         <outlet property="headerContainer" destination="ds6-eL-p3a" id="gSS-bd-CUO"/>
+                        <outlet property="ivAddMemo" destination="AwG-ir-uY7" id="ad7-jZ-m0O"/>
                         <outlet property="ivMenu" destination="vgL-c7-c9g" id="iEa-D4-FYV"/>
                         <outlet property="memoTable" destination="8I3-fd-oSf" id="sIC-QD-dty"/>
                         <outlet property="searchViewContainer" destination="0Pb-JQ-bwk" id="fzV-KY-3Ha"/>
                         <outlet property="totalConainer" destination="R3V-an-aou" id="cpm-cn-b3u"/>
                         <outlet property="trashView" destination="XHi-fJ-9wA" id="c1p-3u-Ukt"/>
-                        <segue destination="fNA-b2-dLZ" kind="push" id="YcE-2p-ipi"/>
+                        <segue destination="fNA-b2-dLZ" kind="push" identifier="segueSecurity" id="YcE-2p-ipi"/>
                         <segue destination="dNE-UB-QXQ" kind="show" identifier="seguePaper" id="gqO-2t-t28"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="seguePW" id="sug-RM-L43"/>
                     </connections>
