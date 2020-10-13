@@ -9,7 +9,7 @@
 import UIKit
 
 class PaperViewController: UIViewController, UITextViewDelegate {
-
+    
     @IBOutlet var headerContainer: UIView!
     @IBOutlet var headerTitle: UILabel!
     @IBOutlet var headerBack: UIImageView!
@@ -26,15 +26,24 @@ class PaperViewController: UIViewController, UITextViewDelegate {
     
     var placeholderLabel : UILabel!
     
+    var isNew: Bool!
+    var isReal: Bool!
+    var clickType: Int!
+    var secureType: Int!
+    var rTitle: String!
+    var rContent: String!
+    var fTitle: String!
+    var fContent: String!
+    var memoCode: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         saveBtn.layer.cornerRadius = 10
         headerContainer.layer.shadowColor = UIColor.gray.cgColor
-             headerContainer.layer.shadowOpacity = 0.5
-             headerContainer.layer.shadowRadius = 3
-             headerContainer.layer.shadowOffset = CGSize(width: 1, height: 1)
+        headerContainer.layer.shadowOpacity = 0.5
+        headerContainer.layer.shadowRadius = 3
+        headerContainer.layer.shadowOffset = CGSize(width: 1, height: 1)
         
         totalContainer.backgroundColor = UIColor(hexFromString: "#f5f5f5")
         headerContainer.backgroundColor = UIColor(hexFromString: "#ffffff")
@@ -43,7 +52,7 @@ class PaperViewController: UIViewController, UITextViewDelegate {
         btnSecurity.setTitleColor(UIColor(hexFromString: "#f37a00"), for: .normal)
         
         paperTitle.attributedPlaceholder = NSAttributedString(string: "제목을 입력해주세요",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexFromString: UIColor(hexFromString: "#544f4f"))])
+                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexFromString: "#544f4f")])
         
         
         paperContents.delegate = self
@@ -56,8 +65,25 @@ class PaperViewController: UIViewController, UITextViewDelegate {
         placeholderLabel.textColor = UIColor(hexFromString: "#544f4f")
         paperContents.isHidden = !paperContents.text.isEmpty
         
+        // 새로운 글인지
+        if isNew {
+            // 실제글인지
+            if isReal {
+                
+            } else {
+                
+            }
+        } else {
+            // 실제글인지
+            if isReal {
+                
+            } else {
+                
+            }
+        }
+        
     }
     
-
-
+    
+    
 }

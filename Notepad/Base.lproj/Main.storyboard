@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dNE-UB-QXQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dNE-UB-QXQ">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -540,6 +540,7 @@
                         <outlet property="totalConainer" destination="R3V-an-aou" id="cpm-cn-b3u"/>
                         <outlet property="trashView" destination="XHi-fJ-9wA" id="c1p-3u-Ukt"/>
                         <segue destination="fNA-b2-dLZ" kind="push" id="YcE-2p-ipi"/>
+                        <segue destination="dNE-UB-QXQ" kind="show" identifier="seguePaper" id="8uU-gu-SL1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cJC-uT-2SW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2858,6 +2859,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="RIG-oP-WeP"/>
         <segue reference="1Hr-iQ-jcx"/>
+        <segue reference="8uU-gu-SL1"/>
         <segue reference="7rF-SX-pQ9"/>
         <segue reference="CxV-db-1nk"/>
     </inferredMetricsTieBreakers>

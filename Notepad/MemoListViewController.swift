@@ -35,6 +35,8 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet var totalConainer: UIView!
     var userID: String!
     var datas: [MemoData] = []
+    var selectedData: MemoData!
+    var selectedIsReal: Bool!
     
     lazy var menuTableView: UITableView = {
         let tableView = UITableView()
@@ -116,6 +118,25 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         setupMenuView()
         getBasicMemoList()
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "seguePaper":
+            let paperVC = segue.destination as! PaperViewController
+            paperVC.memoCode = self.selectedData.memoCode
+            paperVC.isNew = false
+            paperVC.isReal = selectedIsReal
+            paperVC.rTitle = self.selectedData.rTitle
+            paperVC.rContent = self.selectedData.rContent
+            paperVC.fTitle = self.selectedData.fTitle
+            paperVC.fContent = self.selectedData.fContent
+            paperVC.clickType = Int(self.selectedData.clickType)
+            paperVC.secureType = Int(self.selectedData.secureType)
+            return
+        default:
+            return
+        }
     }
     
     func setupMenuView(){
@@ -245,12 +266,9 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             singleTapGesture.require(toFail: doubleTapGesture)
             
-            singleTapGesture.clickType = Int(data.clickType)
-            singleTapGesture.secureType = Int(data.secureType)
-            doubleTapGesture.clickType = Int(data.clickType)
-            doubleTapGesture.secureType = Int(data.secureType)
-            longPressGesture.clickType = Int(data.clickType)
-            longPressGesture.secureType = Int(data.secureType)
+            singleTapGesture.data = data
+            doubleTapGesture.data = data
+            longPressGesture.data = data
             
             cell.isUserInteractionEnabled = true
             cell.addGestureRecognizer(singleTapGesture)
@@ -351,30 +369,36 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @objc func singleTap(_ sender: SecureTapGestureRecognizer) {
         print("single tap")
         // 보안 설정인 경우
-        if sender.secureType == 3 {
+        if sender.data.secureType == "3" {
             // 클릭 타입이 단일 선택인 경우
-            if sender.clickType == 1 {
+            if sender.data.clickType == "1" {
                 // 실제글 표시
+                showPaper(data: sender.data, isReal: true)
             } else {
                 // 페이크글 표시
+                showPaper(data: sender.data, isReal: false)
             }
         } else {
             // 실제글 표시 (일반글)
+            showPaper(data: sender.data, isReal: true)
         }
     }
     
     @objc func doubleTap(_ sender: SecureTapGestureRecognizer) {
         print("double tap")
         // 보안 설정인 경우
-        if sender.secureType == 3 {
+        if sender.data.secureType == "3" {
             // 클릭 타입이 더블클릭인 경우
-            if sender.clickType == 2 {
+            if sender.data.clickType == "2" {
                 // 실제글 표시
+                showPaper(data: sender.data, isReal: true)
             } else {
                 // 페이크글 표시
+                showPaper(data: sender.data, isReal: false)
             }
         } else {
             // 실제글 표시 (일반글)
+            showPaper(data: sender.data, isReal: true)
         }
     }
     
@@ -382,29 +406,36 @@ class MemoListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if sender.state == .ended {
             print("long press")
             // 보안 설정인 경우
-            if sender.secureType == 3 {
+            if sender.data.secureType == "3" {
                 // 클릭 타입이 롱클릭인 경우
-                if sender.clickType == 3 || sender.clickType == 4 {
+                if sender.data.clickType == "3" || sender.data.clickType == "4" {
                     // 실제글 표시
+                    showPaper(data: sender.data, isReal: true)
                 } else {
                     // 페이크글 표시
+                    showPaper(data: sender.data, isReal: false)
                 }
             } else {
                 // 실제글 표시 (일반글)
+                showPaper(data: sender.data, isReal: true)
             }
         }
     }
     
+    func showPaper(data: MemoData, isReal: Bool) {
+        self.selectedData = data
+        self.selectedIsReal = isReal
+        
+        self.performSegue(withIdentifier: "seguePaper", sender: nil)
+    }
 }
 
 class SecureTapGestureRecognizer: UITapGestureRecognizer {
-    var secureType: Int!
-    var clickType: Int!
+    var data: MemoData!
 }
 
 class SecureLongPressGestureRecognizer: UILongPressGestureRecognizer {
-    var secureType: Int!
-    var clickType: Int!
+    var data: MemoData!
 }
 
 

@@ -26,6 +26,8 @@ class Tutorial_PW_ViewController: UIViewController {
     var pwArray = Array<UIView>()
     
     var pwInput = ""
+    var memoData: MemoData!
+    var isPaper: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,11 @@ class Tutorial_PW_ViewController: UIViewController {
         for i in 0..<pwArray.count{
             pwArray[i].layer.cornerRadius = 5
             pwArray[i].backgroundColor = UIColor.init(red: 243/255, green: 115/255, blue: 0, alpha: 0.2)
+        }
+        
+        // 메모 리스트에서 들어온 경우
+        if isPaper {
+            
         }
         
     }
