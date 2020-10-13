@@ -45,7 +45,6 @@ class PaperViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         
-        
         saveBtn.layer.cornerRadius = 10
         headerContainer.layer.shadowColor = UIColor.gray.cgColor
         headerContainer.layer.shadowOpacity = 0.5
@@ -68,6 +67,8 @@ class PaperViewController: UIViewController, UITextViewDelegate {
         ivKeyboardHide.isUserInteractionEnabled = true
         ivKeyboardHide.addGestureRecognizer(tapGestureRecognizer1)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         paperContents.delegate = self
         placeholderLabel = UILabel()
@@ -94,11 +95,7 @@ class PaperViewController: UIViewController, UITextViewDelegate {
             } else {
                 
             }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        
+        }
         
     }
     
