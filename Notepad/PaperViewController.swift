@@ -9,7 +9,7 @@
 import UIKit
 
 class PaperViewController: UIViewController, UITextViewDelegate {
-
+    
     @IBOutlet var headerContainer: UIView!
     @IBOutlet var headerTitle: UILabel!
     @IBOutlet var headerBack: UIImageView!
@@ -23,41 +23,91 @@ class PaperViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var saveBtn: UIButton!
     
     @IBOutlet var totalContainer: UIView!
+    @IBOutlet var paperContainer: UIView!
     
     var placeholderLabel : UILabel!
     
     
+    @IBOutlet var ivKeyboardHide: UIImageView!
+    @IBOutlet var keyboardHide: NSLayoutConstraint!
+    
+    @IBOutlet var tvHeight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        
         saveBtn.layer.cornerRadius = 10
         headerContainer.layer.shadowColor = UIColor.gray.cgColor
-             headerContainer.layer.shadowOpacity = 0.5
-             headerContainer.layer.shadowRadius = 3
-             headerContainer.layer.shadowOffset = CGSize(width: 1, height: 1)
+        headerContainer.layer.shadowOpacity = 0.5
+        headerContainer.layer.shadowRadius = 3
+        headerContainer.layer.shadowOffset = CGSize(width: 1, height: 1)
         
-        totalContainer.backgroundColor = UIColor(hexFromString: "#f5f5f5")
+        totalContainer.backgroundColor = UIColor(hexFromString: "#ffffff")
+        paperContainer.backgroundColor = UIColor(hexFromString: "#f5f5f5")
+        paperContents.backgroundColor = UIColor(hexFromString: "#f5f5f5")
+        paperTitle.backgroundColor = UIColor(hexFromString: "#f5f5f5")
         headerContainer.backgroundColor = UIColor(hexFromString: "#ffffff")
         headerBack.tintColor = UIColor(hexFromString: "#544f4f")
         saveBtn.backgroundColor = UIColor(hexFromString: "#f37a00")
         btnSecurity.setTitleColor(UIColor(hexFromString: "#f37a00"), for: .normal)
         
         paperTitle.attributedPlaceholder = NSAttributedString(string: "제목을 입력해주세요",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexFromString: UIColor(hexFromString: "#544f4f"))])
+                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexFromString: "#544f4f")])
+        
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(imageTapped1(tapGestureRecognizer:)))
+        ivKeyboardHide.isUserInteractionEnabled = true
+        ivKeyboardHide.addGestureRecognizer(tapGestureRecognizer1)
         
         
         paperContents.delegate = self
         placeholderLabel = UILabel()
         placeholderLabel.text = "내용을 입력해주세요"
-        paperContents.font = UIFont.systemFont(ofSize: paperContents.font!.pointSize)
+        placeholderLabel.font = UIFont.systemFont(ofSize: paperContents.font!.pointSize)
         placeholderLabel.sizeToFit()
         paperContents.addSubview(placeholderLabel)
-        paperContents.frame.origin = CGPoint(x: 5, y: (paperContents.font?.pointSize)! / 2)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: (paperContents.font?.pointSize)! / 2)
         placeholderLabel.textColor = UIColor(hexFromString: "#544f4f")
         paperContents.isHidden = !paperContents.text.isEmpty
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        
+        
     }
     
-
-
+    @objc func imageTapped1(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        self.view.endEditing(true)
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+    
+    
+    @objc func keyboardWillAppear(notification: NSNotification) {
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            print("keyboardHeight = \(keyboardHeight)")
+            
+            ivKeyboardHide.isHidden = false
+            keyboardHide.constant = CGFloat(keyboardHeight + 20)
+            tvHeight.constant = CGFloat(keyboardHeight + 20)
+        }
+        
+    }
+    
+    
+    @objc func keyboardWillDisappear() {
+        ivKeyboardHide.isHidden = true
+        tvHeight.constant = CGFloat(10)
+    }
+    
+    
+    
 }
